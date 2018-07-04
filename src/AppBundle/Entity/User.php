@@ -39,6 +39,13 @@ class User implements UserInterface
      */
     private $email;
 
+    private $salt;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
     public function getId()
     {
         return $this->id;
@@ -79,9 +86,24 @@ class User implements UserInterface
         $this->email = $email;
     }
 
+    /**
+     * Get roles
+     *
+     * @return array
+     */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return $this->roles;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;  
     }
 
     public function eraseCredentials()
