@@ -42,7 +42,7 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     private $user;
 
@@ -105,5 +105,15 @@ class Task
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * Get whether task is from anonymous author
+     *
+     * @return bool
+     */
+    public function isAnonymous()
+    {
+        return 'anonymous' === strtolower($this->getUser()->getUsername());
     }
 }

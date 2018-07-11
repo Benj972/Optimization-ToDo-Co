@@ -42,7 +42,7 @@ class User implements UserInterface
     private $salt;
 
     /**
-     * @ORM\Column(name="roles", type="array")
+     * @ORM\Column(name="roles", type="array", nullable=true)
      */
     private $roles = array();
 
