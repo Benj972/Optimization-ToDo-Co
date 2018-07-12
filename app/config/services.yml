@@ -4,9 +4,15 @@ parameters:
 #    parameter_name: value
 
 services:
-    app.task_voter:
-        class: AppBundle\Security\TaskVoter
-        arguments: ['@security.access.decision_manager']
-        tags:
-            - { name: security.voter }
-        public: false
+    _defaults:
+      autowire: true
+      autoconfigure: true
+      public: false
+
+    AppBundle\:
+      resource: '../../src/AppBundle/*'
+      exclude: '../../src/AppBundle/{Entity,Repository}'
+
+    AppBundle\Controller\:
+        resource: '../../src/AppBundle/Controller'
+        tags: ['controller.service_arguments']
