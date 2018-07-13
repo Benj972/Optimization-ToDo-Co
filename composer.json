@@ -31,7 +31,8 @@
     },
     "require-dev": {
         "symfony/web-server-bundle": "^4.1",
-        "symfony/phpunit-bridge": "^4.1"
+        "symfony/phpunit-bridge": "^4.1",
+        "doctrine/doctrine-fixtures-bundle": "^3.0"
     },
     "scripts": {
         "symfony-scripts": [
