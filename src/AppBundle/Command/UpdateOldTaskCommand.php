@@ -27,7 +27,7 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
     {
         $this
             ->setName('demo:load')
-            ->setDescription('Updates old tasks without author')
+            ->setDescription('Updates old tasks without user')
             ->addArgument('anonymous')
         ;
     }
@@ -39,7 +39,7 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
         if (true == $usercommand) {
             $anonymous = $this->load();
             $this->setOldTask($anonymous);
-            $text = strtoupper('Old Task Update');
+            $text = strtoupper('Old Tasks Update');
         }
         $output->writeln($text);
     }
@@ -51,9 +51,8 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
         $plainPassword = 'passwordanonymous';
         $encoded = $this->encoder->encodePassword($anonymous, $plainPassword);
         $anonymous->setPassword($encoded);
-        /*$anonymous->setPassword('password');*/
         $anonymous->setEmail('anonymous@hotmail.fr');
-        $anonymous->setRoles(['ROLE_USER']);
+        $anonymous->setRoles(['ROLE_ADMIN']);
         $this->manager->persist($anonymous);
         $this->manager->flush();
         return $anonymous;
