@@ -5,3 +5,7 @@ php:
 script:
    - composer install
    - vendor/bin/simple-phpunit
+
+branches:
+  only:
+  - feature/improvement_role
