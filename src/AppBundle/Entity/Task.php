@@ -40,6 +40,12 @@ class Task
      */
     private $isDone;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \Datetime();
@@ -89,5 +95,25 @@ class Task
     public function toggle($flag)
     {
         $this->isDone = $flag;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get whether task is from anonymous author
+     *
+     * @return bool
+     */
+    public function isAnonymous()
+    {
+        return 'anonymous' === strtolower($this->getUser()->getUsername());
     }
 }

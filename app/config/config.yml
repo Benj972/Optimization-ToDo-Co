@@ -17,13 +17,12 @@ framework:
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:      { enable_annotations: true }
+    validation:      { enable_annotations: true}
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
@@ -67,3 +66,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sensio_framework_extra:
+    router:      { annotations: false }
