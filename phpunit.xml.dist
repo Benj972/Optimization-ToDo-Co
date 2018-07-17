@@ -28,4 +28,9 @@
             </exclude>
         </whitelist>
     </filter>
+
+    <php>
+        <!-- the value is the Doctrine connection string in DSN format -->
+        <env name="DATABASE_URL" value="mysql://root:root@localhost:3306/todocotest" />
+    </php>
 </phpunit>

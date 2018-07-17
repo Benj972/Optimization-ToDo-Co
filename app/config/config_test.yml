@@ -7,10 +7,24 @@ framework:
         storage_id: session.storage.mock_file
     profiler:
         collect: false
-
+    csrf_protection: false
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   todocotest
+        user:     "%database_user%"
+        password: "%database_password%"
+
+security:
+    firewalls:
+        # replace 'main' by the name of your own firewall
+        main:
+            http_basic: ~
