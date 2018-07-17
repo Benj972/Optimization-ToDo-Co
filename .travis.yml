@@ -2,10 +2,21 @@ language: php
 php:
   - '7.1'
 
+services:
+  - mysql
+
+install:
+  - composer install
+  - php bin/console doctrine:database:create --env=test
+  - php bin/console doctrine:schema:update --force --env=test
+  - php bin/console doctrine:fixtures:load --env=test
+
 script:
-   - composer install
    - vendor/bin/simple-phpunit
 
 branches:
   only:
   - feature/improvement_role
+
+before-install:
+  - composer self-update
