@@ -32,7 +32,9 @@
     "require-dev": {
         "symfony/web-server-bundle": "^4.1",
         "symfony/phpunit-bridge": "^4.1",
-        "doctrine/doctrine-fixtures-bundle": "^3.0"
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "symfony/browser-kit": "^4.1",
+        "symfony/css-selector": "^4.1"
     },
     "scripts": {
         "symfony-scripts": [
