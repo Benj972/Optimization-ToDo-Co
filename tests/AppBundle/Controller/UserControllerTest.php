@@ -14,9 +14,12 @@ class UserControllerTest extends WebTestCase
     
     private $clientAdmin = null;
 
+    private $clientNotLoged = null;
 
     public function setUp()
     {
+        $this->clientNotLoged = static::createClient();
+
         $this->clientUser = static::createClient(array(), array(
         'PHP_AUTH_USER' => 'User1',
         'PHP_AUTH_PW'   => 'password1',
@@ -26,32 +29,62 @@ class UserControllerTest extends WebTestCase
         'PHP_AUTH_USER' => 'User2',
         'PHP_AUTH_PW'   => 'password2',
         ));
-
-        $this->secondClient = static::createClient();
     }
 
     public function testLoginPage()
     {
-        $this->secondClient->request('GET', '/login');
-        $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
+        $this->clientNotLoged->request('GET', '/login');
+        $this->assertSame(200, $this->clientNotLoged->getResponse()->getStatusCode());
+    }
+
+    public function testListActionNotLoged()
+    {
+        $this->clientNotLoged->request('GET', '/users');
+        $crawler = $this->clientNotLoged->followRedirect();
+        $this->assertEquals(200, $this->clientNotLoged->getResponse()->getStatusCode());
+        $this->assertEquals(1, $crawler->filter('html:contains("Se connecter")')->count());
+    }
+
+    public function testListActionUser()
+    {
+        $this->clientUser->request('GET', '/users');
+        $this->assertSame(403, $this->clientUser->getResponse()->getStatusCode());
+    }
+
+    public function testListActionAdmin()
+    {
+        $crawler = $this->clientAdmin->request('GET', '/users');
+        $this->assertSame(200, $this->clientAdmin->getResponse()->getStatusCode());
+        $this->assertSame(1, $crawler->filter('html:contains("Liste des utilisateurs")')->count());
+    }
+
+    public function testCreateButtonAdmin()
+    {
+        $crawler = $this->clientAdmin->request('GET', '/');
+        $link = $crawler->selectLink('Créer un utilisateur')->link();
+        $crawler = $this->clientAdmin->click($link);
+        $this->assertSame(200, $this->clientAdmin->getResponse()->getStatusCode());
+        $this->assertSame(1, $crawler->filter('html:contains("Créer un utilisateur")')->count());
+        $this->assertSame(1, $crawler->filter('form')->count());
+    }
+
+    public function testCreateButtonUser()
+    {
+        $crawler = $this->clientUser->request('GET', '/');
+        $link = $crawler->selectLink('Créer un utilisateur')->link();
+        $crawler = $this->clientUser->click($link);
+        $this->assertSame(403, $this->clientUser->getResponse()->getStatusCode());
     }
 
     public function testCreateActionAsUser()
     {
-        $this->clientUser->request('GET', '/users/create', array(), array(), array(
-        'PHP_AUTH_USER' => 'User1',
-        'PHP_AUTH_PW'   => 'password1',
-        ));
+        $this->clientUser->request('GET', '/users/create');
         $this->assertSame(403, $this->clientUser->getResponse()->getStatusCode());
     }
 
     public function testCreateActionAsAdmin()
     {    
-        $crawler = $this->clientAdmin->request('GET', '/users/create', array(), array(), array(
-        'PHP_AUTH_USER' => 'User2',
-        'PHP_AUTH_PW'   => 'password2',
-        ));
-
+        $crawler = $this->clientAdmin->request('GET', '/users/create');
         $this->assertSame(
             Response::HTTP_OK,
             $this->clientAdmin->getResponse()->getStatusCode()
@@ -73,22 +106,52 @@ class UserControllerTest extends WebTestCase
         $this->assertSame(1, $crawler->filter('html:contains("user3@hotmail.fr")')->count());
     }
 
+    public function testCreateActionEmptyUsername()
+    {
+        $crawler = $this->clientAdmin->request('GET', '/users/create');
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['user[password][first]'] = 'password';
+        $form['user[password][second]'] = 'password';
+        $form['user[email]'] = 'test1@hotmail.fr';
+        $form['user[roles][1]'] = 'ROLE_USER';
+        $crawler = $this->clientAdmin->submit($form);
+        $this->assertSame(1, $crawler->filter('html:contains("Créer un utilisateur")')->count());
+    }
+
+    public function testCreateActionEmptyEmail()
+    {
+        $crawler = $this->clientAdmin->request('GET', '/users/create');
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['user[username]'] = 'User';
+        $form['user[password][first]'] = 'password';
+        $form['user[password][second]'] = 'password';
+        $form['user[roles][1]'] = 'ROLE_USER';
+        $crawler = $this->clientAdmin->submit($form);
+        $this->assertSame(1, $crawler->filter('html:contains("Créer un utilisateur")')->count());
+    }
+
+    public function testCreateActionNonUniqueEmail()
+    {
+        $crawler = $this->clientAdmin->request('GET', '/users/create');
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['user[username]'] = 'User';
+        $form['user[password][first]'] = 'password';
+        $form['user[password][second]'] = 'password';
+        $form['user[email]'] = 'user1@hotmail.fr';
+        $form['user[roles][1]'] = 'ROLE_USER';
+        $crawler = $this->clientAdmin->submit($form);
+        $this->assertSame(1, $crawler->filter('html:contains(" This value is already used.")')->count());
+    }
+
     public function testEditActionAsUser()
     {
-        $this->clientUser->request('GET', '/users/3/edit', array(), array(), array(
-        'PHP_AUTH_USER' => 'User1',
-        'PHP_AUTH_PW'   => 'password1',
-        ));
+        $this->clientUser->request('GET', '/users/3/edit');
         $this->assertSame(403, $this->clientUser->getResponse()->getStatusCode());
     }
 
     public function testEditActionAsAdmin()
     {
-        $crawler = $this->clientAdmin->request('GET', '/users/3/edit', array(), array(), array(
-        'PHP_AUTH_USER' => 'User2',
-        'PHP_AUTH_PW'   => 'password2',
-        ));
-
+        $crawler = $this->clientAdmin->request('GET', '/users/3/edit');
         $this->assertSame(
             Response::HTTP_OK,
             $this->clientAdmin->getResponse()->getStatusCode()
