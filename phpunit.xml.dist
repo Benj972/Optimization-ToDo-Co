@@ -14,10 +14,12 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
+            <file>tests/AppBundle/Fixtures/DoctrineDataFixturesLoadingTest.php</file>
+            <file>tests/AppBundle/Controller/DefaultControllerTest.php</file>
             <file>tests/AppBundle/Controller/SecurityControllerTest.php</file>
             <file>tests/AppBundle/Controller/TaskControllerTest.php</file>
-            <file>tests/AppBundle/Controller/UserControllerTest.php</file>
-            <file>tests/AppBundle/Controller/DefaultControllerTest.php</file>
+            <file>tests/AppBundle/Controller/UserControllerTest.php</file>       
+            <file>tests/AppBundle/Command/UpdateOldTaskCommandTest.php</file>
         </testsuite>
     </testsuites>
 
