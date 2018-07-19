@@ -14,7 +14,7 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <file>tests/AppBundle/Fixtures/DoctrineDataFixturesLoadingTest.php</file>
+            <!--<file>tests/AppBundle/Fixtures/DoctrineDataFixturesLoadingTest.php</file>-->
             <file>tests/AppBundle/Controller/DefaultControllerTest.php</file>
             <file>tests/AppBundle/Controller/SecurityControllerTest.php</file>
             <file>tests/AppBundle/Controller/TaskControllerTest.php</file>
