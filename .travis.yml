@@ -17,6 +17,7 @@ script:
 branches:
   only:
   - feature/improvement_role
+  - feature/code_coverage
 
 before-install:
   - composer self-update

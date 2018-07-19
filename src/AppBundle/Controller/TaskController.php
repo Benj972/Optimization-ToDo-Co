@@ -36,7 +36,7 @@ class TaskController extends Controller
             $em->persist($task);
             $em->flush();
 
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+            $this->addFlash('success', 'La tâche a bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
         }
@@ -76,7 +76,9 @@ class TaskController extends Controller
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        // Different feedback message according to task 
+        $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.';
+        $this->addFlash('success', sprintf($feedback, $task->getTitle()));
 
         return $this->redirectToRoute('task_list');
     }
