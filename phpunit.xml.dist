@@ -14,7 +14,6 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <!--<file>tests/AppBundle/Fixtures/DoctrineDataFixturesLoadingTest.php</file>-->
             <file>tests/AppBundle/Controller/DefaultControllerTest.php</file>
             <file>tests/AppBundle/Controller/SecurityControllerTest.php</file>
             <file>tests/AppBundle/Controller/TaskControllerTest.php</file>
@@ -27,6 +26,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
+                <directory>src/AppBundle/DataFixtures</directory>
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
