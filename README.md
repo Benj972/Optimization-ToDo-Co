@@ -54,7 +54,7 @@ Application performances were analyzed with [BlackFire](https://blackfire.io/) t
 Documentation:
 --------------
 In `/docs` folder you can find:
-* An explanatory [document]() on authentication
+* An explanatory [document](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/L'authentification.pdf) on authentication
 * The code quality and performance [audit report]()
 * [Instructions to contribute](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/contribution.md) to the project
 * [UML diagrams](https://github.com/Benj972/ToDo-Co/tree/feature/refactoring/docs/diagrams)
