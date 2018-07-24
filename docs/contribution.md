@@ -25,7 +25,7 @@ Instructions:
 	To be placed in a folder in Git and enter `git clone https://github.com/Benj972/ToDo-Co.git`
 
 3. Install Project
-	Refer to README.md to install application.
+	Refer to [README.md](https://github.com/Benj972/ToDo-Co/blob/master/README.md) to install application.
 
 4. Contribute to apllication
 	Use git-flow for contribute to project. You work from the develop branch and you create a new branch to make a change.
@@ -46,7 +46,7 @@ Instructions:
 7. Tests and Quality of code
  	* Code coverage with PhpUnit Bridge
  		It is important to test each new feature to maintain a code coverage of over 90%.
- 		For check code coverage run this command "vendor/bin/simple-phpunit --coverage-html cov/" 
+ 		For check code coverage run this command `vendor/bin/simple-phpunit --coverage-html cov/`
 
  	* Continuous integration
 		For each pull request, Travis CI will automatically run tests and code will be checked by the Codacy tool.	
