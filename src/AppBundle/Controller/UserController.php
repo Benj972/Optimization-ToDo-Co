@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security; 
 use AppBundle\Handler\CreateUserHandler;
 use AppBundle\Handler\EditUserHandler;
+use AppBundle\Handler\DeleteUserHandler;
 
 /**
  * @Security("has_role('ROLE_ADMIN')")
@@ -36,6 +37,14 @@ class UserController extends Controller
      * @Route("/users/{id}/edit", name="user_edit")
      */
     public function editAction(EditUserHandler $handler, User $user)
+    {
+        return $handler->handle($user);
+    }
+
+    /**
+     * @Route("/users/{id}/delete", name="user_delete")
+     */
+    public function deleteAction(DeleteUserHandler $handler, User $user)
     {
         return $handler->handle($user);
     }

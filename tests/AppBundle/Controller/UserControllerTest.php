@@ -140,7 +140,7 @@ class UserControllerTest extends WebTestCase
         $form['user[email]'] = 'user1@hotmail.fr';
         $form['user[roles][1]'] = 'ROLE_USER';
         $crawler = $this->clientAdmin->submit($form);
-        $this->assertSame(1, $crawler->filter('html:contains(" This value is already used.")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Cet email est déjà utilisé par un utilisateur.")')->count());
     }
 
     public function testEditActionAsUser()
@@ -170,5 +170,19 @@ class UserControllerTest extends WebTestCase
         $this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! L\'utilisateur a bien été modifié")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("User3")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("user3edit@hotmail.fr")')->count());
+    }
+
+    public function testDeleteActionAsUser()
+    {
+        $this->clientUser->request('GET', '/users/2/delete');
+        $this->assertSame(403, $this->clientUser->getResponse()->getStatusCode());
+    }
+
+    public function testDeleteActionAsAdmin()
+    {
+        $this->clientAdmin->request('GET', '/users/3/delete');
+        $crawler = $this->clientAdmin->followRedirect();
+        $response = $this->clientAdmin->getResponse();
+        $this->assertSame(200, $response->getStatusCode());
     }
 }
