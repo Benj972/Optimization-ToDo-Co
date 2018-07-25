@@ -4,9 +4,7 @@ namespace AppBundle\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Task;
-use AppBundle\Form\TaskType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
 
