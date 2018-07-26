@@ -181,8 +181,6 @@ class UserControllerTest extends WebTestCase
     public function testDeleteActionAsAdmin()
     {
         $this->clientAdmin->request('GET', '/users/3/delete');
-        $crawler = $this->clientAdmin->followRedirect();
-        $response = $this->clientAdmin->getResponse();
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(200, $this->clientAdmin->getResponse()->getStatusCode());
     }
 }
