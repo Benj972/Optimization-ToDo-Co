@@ -27,8 +27,7 @@ class TaskController extends Controller
      */
     public function createAction(CreateTaskHandler $handler)
     {
-        $user = $this->getUser();
-        return $handler->handle($user);
+        return $handler->handle($this->getUser());
     }
 
     /**
