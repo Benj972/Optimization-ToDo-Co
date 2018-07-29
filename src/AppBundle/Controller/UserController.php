@@ -46,6 +46,6 @@ class UserController extends Controller
      */
     public function deleteAction(DeleteUserHandler $handler, User $user)
     {
-        return $handler->handle($user);
+        return $handler->handle($user, $this->getUser());
     }
 }
