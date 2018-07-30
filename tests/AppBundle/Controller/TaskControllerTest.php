@@ -102,7 +102,6 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->clientUser->followRedirect();
         $response = $this->clientUser->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! La tâche a bien été ajoutée.")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("New task")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("New task content")')->count());
     }
@@ -117,7 +116,6 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->clientAdmin->followRedirect();
         $response = $this->clientAdmin->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! La tâche a bien été ajoutée.")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("New task")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("New task content")')->count());
     }
@@ -132,7 +130,6 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->clientUser->followRedirect();
         $response = $this->clientUser->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! La tâche a bien été modifiée.")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("Task3edit")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("Task3edit content")')->count());
     }
@@ -147,7 +144,6 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->clientAdmin->followRedirect();
         $response = $this->clientAdmin->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! La tâche a bien été modifiée.")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("Task3edit")')->count());
         $this->assertSame(1, $crawler->filter('html:contains("Task3edit content")')->count());
     }
@@ -162,37 +158,33 @@ class TaskControllerTest extends WebTestCase
     public function testToggleUndone()
     {
         $this->clientUser->request('GET', '/tasks/3/toggle');
-        /*$crawler =*/ $this->clientUser->followRedirect();
+        $this->clientUser->followRedirect();
         $response = $this->clientUser->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        /*$this->assertSame(1, $crawler->filter('div.alert-success:contains("a bien été marquée en cours.")')->count());*/
     }
 
     public function testToggleDone()
     {
         $this->clientUser->request('GET', '/tasks/6/toggle');
-        /*$crawler =*/ $this->clientUser->followRedirect();
+        $this->clientUser->followRedirect();
         $response = $this->clientUser->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        /*$this->assertSame(1, $crawler->filter('div.alert-success:contains("a bien été marquée comme terminée.")')->count());*/
     }
     
     public function testDeleteActionUser()
-    {
-        $this->clientUser->request('GET', '/tasks/4/delete');
-        /*$crawler =*/ $this->clientUser->followRedirect();
-        $response = $this->clientUser->getResponse();
-        $this->assertSame(200, $response->getStatusCode());
-        /*$this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! La tâche a bien été supprimée.")')->count());*/
+    {   
+        $crawler = $this->clientUser->request('GET', '/tasks/4/delete');
+        $this->assertSame(302, $this->clientUser->getResponse()->getStatusCode());
+        $crawler = $this->clientUser->followRedirect();  
+        $this->assertSame(200, $this->clientUser->getResponse()->getStatusCode());
     }
 
     public function testDeleteActionAdmin()
     {
         $this->clientAdmin->request('GET', '/tasks/5/delete');
-        /*$crawler=*/ $this->clientAdmin->followRedirect();
+        $this->clientAdmin->followRedirect();
         $response = $this->clientAdmin->getResponse();
         $this->assertSame(200, $response->getStatusCode());
-        /*$this->assertSame(1, $crawler->filter('div.alert-success:contains("Superbe ! La tâche a bien été supprimée.")')->count());*/
     }
 
     public function testDeleteActionOtherUser()
