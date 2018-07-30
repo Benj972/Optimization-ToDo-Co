@@ -55,6 +55,6 @@ Documentation:
 --------------
 In `/docs` folder you can find:
 * An explanatory [document](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/L'authentification.pdf) on authentication
-* The code quality and performance [audit report]()
+* The code quality and performance [audit report](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/Audit%20de%20qualit%C3%A9.pdf)
 * [Instructions to contribute](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/contribution.md) to the project
 * [UML diagrams](https://github.com/Benj972/ToDo-Co/tree/feature/refactoring/docs/diagrams)
