@@ -142,7 +142,7 @@ class User implements UserInterface
      */
     public function setRoles(array $roles)
     {
-        $this->roles = $roles;  
+        $this->roles = $roles;
     }
 
     /**

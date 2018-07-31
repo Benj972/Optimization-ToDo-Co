@@ -8,4 +8,3 @@ if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
     ));
 }
 require __DIR__.'/../vendor/autoload.php';
-?>

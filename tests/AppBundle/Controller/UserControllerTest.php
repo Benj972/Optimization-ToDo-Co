@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserControllerTest extends WebTestCase
 {
-	private $clientUser = null;
+    private $clientUser = null;
     
     private $clientAdmin = null;
 
@@ -83,7 +83,7 @@ class UserControllerTest extends WebTestCase
     }
 
     public function testCreateActionAsAdmin()
-    {    
+    {
         $crawler = $this->clientAdmin->request('GET', '/users/create');
         $this->assertSame(
             Response::HTTP_OK,

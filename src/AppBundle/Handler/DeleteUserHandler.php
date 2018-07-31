@@ -62,8 +62,7 @@ class DeleteUserHandler
             return new RedirectResponse(
                 $this->router->generate('login')
             );
-        }
-        elseif ($user !==  $logUser) {
+        } elseif ($user !==  $logUser) {
             $this->manager->remove($user);
             $this->manager->flush();
 

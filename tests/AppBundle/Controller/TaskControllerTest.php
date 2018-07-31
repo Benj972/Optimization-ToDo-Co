@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends WebTestCase
 {
-	private $clientUser = null;
+    private $clientUser = null;
 
     private $clientAdmin = null;
 
@@ -31,7 +31,7 @@ class TaskControllerTest extends WebTestCase
         ));
     }
 
-	public function testListActionNotLoged()
+    public function testListActionNotLoged()
     {
         $this->clientNotLoged->request('GET', '/tasks');
         $crawler = $this->clientNotLoged->followRedirect();
@@ -172,10 +172,10 @@ class TaskControllerTest extends WebTestCase
     }
     
     public function testDeleteActionUser()
-    {   
+    {
         $crawler = $this->clientUser->request('GET', '/tasks/4/delete');
         $this->assertSame(302, $this->clientUser->getResponse()->getStatusCode());
-        $crawler = $this->clientUser->followRedirect();  
+        $crawler = $this->clientUser->followRedirect();
         $this->assertSame(200, $this->clientUser->getResponse()->getStatusCode());
     }
 

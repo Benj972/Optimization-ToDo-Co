@@ -53,6 +53,6 @@ class TaskController extends Controller
     public function deleteTaskAction(DeleteTaskHandler $handler, Task $task)
     {
         $this->denyAccessUnlessGranted('delete', $task);
-        return $handler->handle($task); 
+        return $handler->handle($task);
     }
 }

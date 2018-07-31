@@ -12,8 +12,7 @@ class LoadUser extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-
-    	$user1 = new User();
+        $user1 = new User();
         $user1->setUsername('User1');
         $user1->setPassword('password1');
         $user1->setEmail('user1@hotmail.fr');
@@ -27,9 +26,9 @@ class LoadUser extends Fixture
         $user2->setRoles(['ROLE_ADMIN']);
         $manager->persist($user2);
 
-    	$manager->flush();
+        $manager->flush();
 
         $this->addReference('user1', $user1);
-        $this->addReference('user2', $user2);    
+        $this->addReference('user2', $user2);
     }
 }

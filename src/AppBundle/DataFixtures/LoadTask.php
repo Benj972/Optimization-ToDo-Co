@@ -11,18 +11,17 @@ class LoadTask extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-
-    	$task1 = new Task();
+        $task1 = new Task();
         $task1->setTitle('Task1');
         $task1->setContent('Quidem inpares diu conmunitam conmunitam fore frequentibus propinqua inpares nostris tramitibus magnis conmunitam quidem fore petivere inpares milite tramitibus congressione.');
-        $task1->setUser(Null);
+        $task1->setUser(null);
         $task1->toggle(0);
         $manager->persist($task1);
 
         $task2 = new Task();
         $task2->setTitle('Task2');
         $task2->setContent('Quidem inpares diu conmunitam conmunitam fore frequentibus propinqua inpares nostris tramitibus magnis conmunitam quidem fore petivere inpares milite tramitibus congressione.');
-        $task2->setUser(Null);
+        $task2->setUser(null);
         $task2->toggle(1);
         $manager->persist($task2);
 
@@ -47,8 +46,7 @@ class LoadTask extends Fixture implements DependentFixtureInterface
         $task5->toggle(1);
         $manager->persist($task5);
 
-    	$manager->flush();
-    
+        $manager->flush();
     }
 
     public function getDependencies()

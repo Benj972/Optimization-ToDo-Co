@@ -7,7 +7,7 @@ use AppBundle\Form\UserType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security; 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Handler\CreateUserHandler;
 use AppBundle\Handler\EditUserHandler;
 use AppBundle\Handler\DeleteUserHandler;

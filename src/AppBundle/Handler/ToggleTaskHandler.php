@@ -50,7 +50,7 @@ class ToggleTaskHandler
     {
         $task->toggle(!$task->isDone());
         $this->manager->flush();
-        // Different feedback message according to task 
+        // Different feedback message according to task
         $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.';
         $this->flashBag->add('success', sprintf($feedback, $task->getTitle()));
 
