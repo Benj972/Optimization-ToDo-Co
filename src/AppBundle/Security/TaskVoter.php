@@ -57,9 +57,9 @@ class TaskVoter extends Voter
 
     private function canEdit(Task $task, User $user)
     {
-       if ($task->getUser()===$user){
+        if ($task->getUser()===$user) {
             return true;
-       }
+        }
     }
 
     private function canDelete(Task $task, User $user, TokenInterface $token)

@@ -10,7 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table("user")
  * @ORM\Entity
- * @UniqueEntity("email")
+ * @UniqueEntity(fields={"username"}, message="Ce nom est déjà utilisé par un utilisateur.")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé par un utilisateur.")
  */
 class User implements UserInterface
 {
@@ -39,48 +40,86 @@ class User implements UserInterface
      */
     private $email;
 
-    private $salt;
-
     /**
      * @ORM\Column(name="roles", type="array", nullable=true)
      */
     private $roles = array();
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Get username
+     *
+     * @return string
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
+    /**
+     * Set username
+     *
+     * @param string $username
+     */
     public function setUsername($username)
     {
         $this->username = $username;
     }
 
+    /**
+     * Get salt
+     *
+     * @return null
+     */
     public function getSalt()
     {
         return null;
     }
 
+    /**
+     * Get password
+     *
+     * @return string
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * Set password
+     *
+     * @param string $password
+     */
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
+    /**
+     * Get email
+     *
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -103,9 +142,12 @@ class User implements UserInterface
      */
     public function setRoles(array $roles)
     {
-        $this->roles = $roles;  
+        $this->roles = $roles;
     }
 
+    /**
+     * Erase credentials
+     */
     public function eraseCredentials()
     {
     }

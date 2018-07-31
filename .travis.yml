@@ -18,6 +18,7 @@ branches:
   only:
   - feature/improvement_role
   - feature/code_coverage
+  - feature/refactoring
 
 before-install:
   - composer self-update

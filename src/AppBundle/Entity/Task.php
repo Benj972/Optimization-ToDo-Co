@@ -52,56 +52,111 @@ class Task
         $this->isDone = false;
     }
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Get createdAt
+     *
+     * @return \Datetime()
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * Set createdAt
+     *
+     * @param \Datetime() $createdAt
+     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * Get title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * Set title
+     *
+     * @param string $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
+    /**
+     * Get content
+     *
+     * @return string
+     */
     public function getContent()
     {
         return $this->content;
     }
 
+    /**
+     * Set content
+     *
+     * @param string $content
+     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /**
+     * Get isDone
+     *
+     * @return bool
+     */
     public function isDone()
     {
         return $this->isDone;
     }
 
+    /**
+     * Toggle task state
+     *
+     * @param  bool $flag
+     */
     public function toggle($flag)
     {
         $this->isDone = $flag;
     }
 
+    /**
+     * Get user
+     *
+     * @return string
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * Set user
+     *
+     * @param User $user
+     */
     public function setUser($user)
     {
         $this->user = $user;

@@ -11,9 +11,8 @@ class UpdateOldTaskCommandTest extends KernelTestCase
 {
     public function testExecute()
     {
-
-    	$kernel = self::bootKernel();
-		$kernel->boot();
+        $kernel = self::bootKernel();
+        $kernel->boot();
 
         $application = new Application($kernel);
         $command = $application->find('demo:load');

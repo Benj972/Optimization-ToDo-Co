@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-	private $client = null;
+    private $client = null;
 
-	private $clientUser = null;
+    private $clientUser = null;
 
     public function setUp()
     {
@@ -22,8 +22,8 @@ class SecurityControllerTest extends WebTestCase
         'PHP_AUTH_PW'   => 'password1',
         ));
     }
-	
-	public function testLoginAction()
+    
+    public function testLoginAction()
     {
         $crawler = $this->client->request('GET', '/login');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
