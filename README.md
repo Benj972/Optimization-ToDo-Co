@@ -2,7 +2,8 @@ ToDoList
 ========
 
 This repository is the project 8 "ToDoList" in course Php Symfony Web Developer with [OpenClassrooms](https://openclassrooms.com/projects/ameliorer-un-projet-existant-1).
-Codacy Badge
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c3af8d0b23c4961a8ec290a51e81f3e)](https://www.codacy.com/app/Benj972/ToDo-Co?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Benj972/ToDo-Co&amp;utm_campaign=Badge_Grade)
 
 Context:
 --------
@@ -42,6 +43,8 @@ Installation:
 Testing:
 --------
 * Create test database `php bin/console doctrine:database:create --env=test`
+* Update database: `php bin/console doctrine:schema:update --force --env=test`
+* Load database: `php bin/console doctrine:fixtures:load --env=test`
 * Run the tests with `vendor/bin/simple-phpunit`
 * If you want to see the HTML code coverage run this command `vendor/bin/simple-phpunit --coverage-html cov/`
 
