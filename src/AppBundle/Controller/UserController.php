@@ -4,10 +4,17 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use AppBundle\Handler\CreateUserHandler;
+use AppBundle\Handler\EditUserHandler;
+use AppBundle\Handler\DeleteUserHandler;
 
+/**
+ * @Security("has_role('ROLE_ADMIN')")
+ */
 class UserController extends Controller
 {
     /**
@@ -21,49 +28,24 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request)
+    public function createAction(CreateUserHandler $handler)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-
-            return $this->redirectToRoute('user_list');
-        }
-
-        return $this->render('user/create.html.twig', ['form' => $form->createView()]);
+        return $handler->handle();
     }
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(EditUserHandler $handler, User $user)
     {
-        $form = $this->createForm(UserType::class, $user);
+        return $handler->handle($user);
+    }
 
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été modifié");
-
-            return $this->redirectToRoute('user_list');
-        }
-
-        return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+    /**
+     * @Route("/users/{id}/delete", name="user_delete")
+     */
+    public function deleteAction(DeleteUserHandler $handler, User $user)
+    {
+        return $handler->handle($user, $this->getUser());
     }
 }

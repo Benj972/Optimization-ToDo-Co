@@ -5,16 +5,20 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="app/autoload.php"
+         bootstrap="tests/bootstrap.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <server name="KERNEL_DIR" value="app/" />
+        <server name="KERNEL_CLASS" value="AppKernel" />
     </php>
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+            <file>tests/AppBundle/Controller/DefaultControllerTest.php</file>
+            <file>tests/AppBundle/Controller/SecurityControllerTest.php</file>
+            <file>tests/AppBundle/Controller/TaskControllerTest.php</file>
+            <file>tests/AppBundle/Controller/UserControllerTest.php</file>       
+            <file>tests/AppBundle/Command/UpdateOldTaskCommandTest.php</file>
         </testsuite>
     </testsuites>
 
@@ -22,10 +26,17 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
+                <directory>src/AppBundle/DataFixtures</directory>
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
             </exclude>
         </whitelist>
     </filter>
+
+    <php>
+        <!-- the value is the Doctrine connection string in DSN format -->
+        <!--<env name="DATABASE_URL" value="mysql://root:root@localhost:3306/todocotest" />-->
+        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
+    </php>
 </phpunit>
