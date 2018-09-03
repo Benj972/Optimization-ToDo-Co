@@ -3,6 +3,7 @@ ToDoList
 
 This repository is the project 8 "ToDoList" in course Php Symfony Web Developer with [OpenClassrooms](https://openclassrooms.com/projects/ameliorer-un-projet-existant-1).
 
+Version:0.0.1
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c3af8d0b23c4961a8ec290a51e81f3e)](https://www.codacy.com/app/Benj972/ToDo-Co?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Benj972/ToDo-Co&amp;utm_campaign=Badge_Grade)
 
 Context:
@@ -14,7 +15,7 @@ Finally, we analyze the quality of the code and the performance axes.
 Prerequisites:
 --------------
 * Local server environment
-* PHP v7.0
+* PHP v7.1.7
 * MySQL
 * Composer
 
@@ -39,6 +40,7 @@ Installation:
 6. Create database: `php bin/console doctrine:database:create`
 7. Update database: `php bin/console doctrine:schema:update --force`
 8. Load database: `php bin/console doctrine:fixtures:load`
+9. Update old tasks: `php bin/console demo:load anonymous`
 
 Testing:
 --------
@@ -57,7 +59,7 @@ Application performances were analyzed with [BlackFire](https://blackfire.io/) t
 Documentation:
 --------------
 In `/docs` folder you can find:
-* An explanatory [document](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/L'authentification.pdf) on authentication
-* The code quality and performance [audit report](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/Audit%20de%20qualit%C3%A9.pdf)
-* [Instructions to contribute](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/docs/contribution.md) to the project
-* [UML diagrams](https://github.com/Benj972/ToDo-Co/tree/feature/refactoring/docs/diagrams)
+* An explanatory [document](https://github.com/Benj972/ToDo-Co/blob/master/docs/L'authentification.pdf) on authentication
+* The code quality and performance [audit report](https://github.com/Benj972/ToDo-Co/blob/master/docs/Audit%20de%20qualit%C3%A9.pdf)
+* [Instructions to contribute](https://github.com/Benj972/ToDo-Co/blob/master/docs/contribution.md) to the project
+* [UML diagrams](https://github.com/Benj972/ToDo-Co/tree/master/docs/diagrams)

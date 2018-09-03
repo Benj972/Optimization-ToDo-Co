@@ -26,7 +26,7 @@ Instructions:
 	To be placed in a folder in Git and enter `git clone https://github.com/Benj972/ToDo-Co.git`
 
 3. Install Project
-	Refer to [README.md](https://github.com/Benj972/ToDo-Co/blob/feature/refactoring/README.md) to install application.
+	Refer to [README.md](https://github.com/Benj972/ToDo-Co/blob/master/README.md) to install application.
 
 4. Contribute to apllication
 	Use git-flow for contribute to project. You work from the develop branch and you create a new branch to make a change.

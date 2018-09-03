@@ -42,7 +42,7 @@ class TaskControllerTest extends WebTestCase
     public function testListButtonUser()
     {
         $crawler = $this->clientUser->request('GET', '/');
-        $link = $crawler->selectLink('Consulter la liste des tâches à faire')->link();
+        $link = $crawler->selectLink('Consulter la liste des tâches')->link();
         $crawler = $this->clientUser->click($link);
         $this->assertSame(200, $this->clientUser->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->filter('html:contains("Créer une tâche")')->count());
@@ -51,7 +51,7 @@ class TaskControllerTest extends WebTestCase
     public function testListButtonAdmin()
     {
         $crawler = $this->clientAdmin->request('GET', '/');
-        $link = $crawler->selectLink('Consulter la liste des tâches à faire')->link();
+        $link = $crawler->selectLink('Consulter la liste des tâches')->link();
         $crawler = $this->clientAdmin->click($link);
         $this->assertSame(200, $this->clientAdmin->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->filter('html:contains("Créer une tâche")')->count());
