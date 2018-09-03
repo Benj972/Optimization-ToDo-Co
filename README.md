@@ -15,7 +15,7 @@ Finally, we analyze the quality of the code and the performance axes.
 Prerequisites:
 --------------
 * Local server environment
-* PHP v7.0
+* PHP v7.1.7
 * MySQL
 * Composer
 
@@ -40,6 +40,7 @@ Installation:
 6. Create database: `php bin/console doctrine:database:create`
 7. Update database: `php bin/console doctrine:schema:update --force`
 8. Load database: `php bin/console doctrine:fixtures:load`
+9. Update old tasks: `php bin/console demo:load anonymous`
 
 Testing:
 --------
