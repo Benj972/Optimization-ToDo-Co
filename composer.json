@@ -28,7 +28,10 @@
         "twig/twig": "^2.0",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/security-core": "^4.1",
-        "friendsofphp/php-cs-fixer": "^2.12"
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "doctrine/event-manager": "^1.0",
+        "doctrine/persistence": "^1.0",
+        "doctrine/reflection": "^1.0"
     },
     "require-dev": {
         "symfony/web-server-bundle": "^4.1",
