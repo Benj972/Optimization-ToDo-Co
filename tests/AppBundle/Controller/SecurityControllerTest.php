@@ -34,7 +34,7 @@ class SecurityControllerTest extends WebTestCase
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         $this->assertSame(1, $crawler->filter('html:contains("Bienvenue sur Todo List")')->count());
-        $this->assertSame(1, $crawler->filter('html:contains("Consulter la liste des tâches à faire")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Consulter la liste des tâches")')->count());
     }
 
     public function testBadCredentials()

@@ -48,9 +48,7 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
     {
         $anonymous = new User();
         $anonymous->setUsername('anonymous');
-        $plainPassword = 'passwordanonymous';
-        $encoded = $this->encoder->encodePassword($anonymous, $plainPassword);
-        $anonymous->setPassword($encoded);
+        $anonymous->setPassword('passwordanonymous');
         $anonymous->setEmail('anonymous@hotmail.fr');
         $anonymous->setRoles(['ROLE_ADMIN']);
         $this->manager->persist($anonymous);
