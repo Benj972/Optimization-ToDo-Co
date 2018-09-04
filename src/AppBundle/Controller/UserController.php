@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Handler\CreateUserHandler;
 use AppBundle\Handler\EditUserHandler;
 use AppBundle\Handler\DeleteUserHandler;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Security("has_role('ROLE_ADMIN')")
@@ -67,8 +68,20 @@ class UserController extends Controller
     /**
      * @Route("/users/{id}/delete", name="user_delete")
      */
-    public function deleteAction(DeleteUserHandler $handler, User $user)
+    public function deleteAction(DeleteUserHandler $handler, User $user, TokenStorageInterface $tokenStorage)
     {
-        return $handler->handle($user, $this->getUser());
+        if ($user === $this->getUser()) {
+            $handler->handle($user);
+            // UserProvider to null
+            $tokenStorage->setToken(null);
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+            return $this->redirectToRoute('login');
+
+        } elseif ($user !==  $this->getUser()) {
+            $handler->handle($user);
+
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+            return $this->redirectToRoute('user_list');
+        }
     }
 }
