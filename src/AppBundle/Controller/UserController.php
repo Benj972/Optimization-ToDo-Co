@@ -28,17 +28,40 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(CreateUserHandler $handler)
+    public function createAction(CreateUserHandler $handler, Request $request)
     {
-        return $handler->handle();
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if($handler->handle($form, $user)) {
+            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            return $this->redirectToRoute('user_list');
+        }
+
+        return $this->render('user/create.html.twig',[
+            'form'  => $form->createView(),
+        ]);
     }
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(EditUserHandler $handler, User $user)
+    public function editAction(EditUserHandler $handler, User $user, Request $request)
     {
-        return $handler->handle($user);
+        $form =$this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if($handler->handle($form)) {
+            $this->addFlash('success', "L'utilisateur a bien été modifié");
+            return $this->redirectToRoute('user_list');
+        }
+
+        return $this->render('user/edit.html.twig',[
+            'form'  => $form->createView(),
+            'user' => $user,
+        ]);
     }
 
     /**

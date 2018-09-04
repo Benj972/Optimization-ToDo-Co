@@ -25,18 +25,41 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(CreateTaskHandler $handler)
+    public function createAction(Request $request, CreateTaskHandler $handler)
     {
-        return $handler->handle($this->getUser());
+        $task = new Task();
+        $task->setUser($this->getUser());
+        // build the form ...
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+        
+        if ($handler->handle($form, $task)) {
+            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+            return $this->redirectToRoute('task_list');
+        }
+        // render the template
+        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(EditTaskHandler $handler, Task $task)
+    public function editAction(EditTaskHandler $handler, Task $task, Request $request)
     {
         $this->denyAccessUnlessGranted('edit', $task);
-        return $handler->handle($task);
+        // build the form ...
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+
+        if ($handler->handle($form, $task)) {
+            $this->addFlash('success', 'La tâche a bien été modifiée.');
+            return $this->redirectToRoute('task_list');
+        }
+        // render the template
+        return $this->render('task/edit.html.twig', [
+            'form' => $form->createView(),
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -44,7 +67,12 @@ class TaskController extends Controller
      */
     public function toggleTaskAction(ToggleTaskHandler $handler, Task $task)
     {
-        return $handler->handle($task);
+        $handler->handle($task);
+        // Different feedback message according to task
+        $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.'; 
+        $this->addFlash('success', sprintf($feedback, $task->getTitle()));
+
+        return $this->redirectToRoute('task_list');
     }
 
     /**
@@ -53,6 +81,11 @@ class TaskController extends Controller
     public function deleteTaskAction(DeleteTaskHandler $handler, Task $task)
     {
         $this->denyAccessUnlessGranted('delete', $task);
-        return $handler->handle($task);
+
+        $handler->handle($task);
+
+        $this->addFlash('success', 'La tâche a bien été supprimée.');
+        
+        return $this->redirectToRoute('task_list');
     }
 }
