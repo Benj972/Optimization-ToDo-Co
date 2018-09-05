@@ -51,7 +51,7 @@ class TaskController extends Controller
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
-        if ($handler->handle($form, $task)) {
+        if ($handler->handle($form)) {
             $this->addFlash('success', 'La tâche a bien été modifiée.');
             return $this->redirectToRoute('task_list');
         }

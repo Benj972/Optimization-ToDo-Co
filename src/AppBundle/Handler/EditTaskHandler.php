@@ -21,13 +21,11 @@ class EditTaskHandler
     }
 
     /**
-     * @param Task $task
      * @param FormInterface $form
      */
-    public function handle($form, $task)
+    public function handle($form)
     {
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->manager->persist($task);
             $this->manager->flush();
             
             return true;
