@@ -19,6 +19,8 @@
             <file>tests/AppBundle/Controller/TaskControllerTest.php</file>
             <file>tests/AppBundle/Controller/UserControllerTest.php</file>       
             <file>tests/AppBundle/Command/UpdateOldTaskCommandTest.php</file>
+            <file>tests/AppBundle/Handler/TaskControllerTest.php</file>
+            <file>tests/AppBundle/Handler/UserControllerTest.php</file>
         </testsuite>
     </testsuites>
 
