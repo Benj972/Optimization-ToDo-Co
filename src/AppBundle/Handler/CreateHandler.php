@@ -5,7 +5,7 @@ namespace AppBundle\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 
-class CreateTaskHandler
+class CreateHandler
 {
     /**
      * @var EntityManagerInterface
@@ -25,11 +25,11 @@ class CreateTaskHandler
      * @param Task $task
      * @param FormInterface $form
      */
-    public function handle(FormInterface $form, $task): bool
+    public function handle(FormInterface $form, $entity): bool
     {
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->manager->persist($task);
+            $this->manager->persist($entity);
             $this->manager->flush();
             return true;
         }

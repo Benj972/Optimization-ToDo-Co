@@ -7,10 +7,10 @@ use AppBundle\Form\TaskType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Handler\CreateTaskHandler;
-use AppBundle\Handler\EditTaskHandler;
-use AppBundle\Handler\ToggleTaskHandler;
-use AppBundle\Handler\DeleteTaskHandler;
+use AppBundle\Handler\CreateHandler;
+use AppBundle\Handler\EditHandler;
+use AppBundle\Service\ToggleTask;
+use AppBundle\Service\DeleteManager;
 
 class TaskController extends Controller
 {
@@ -25,7 +25,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request, CreateTaskHandler $handler)
+    public function createAction(Request $request, CreateHandler $handler)
     {
         $task = new Task();
         $task->setUser($this->getUser());
@@ -44,7 +44,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(EditTaskHandler $handler, Task $task, Request $request)
+    public function editAction(EditHandler $handler, Task $task, Request $request)
     {
         $this->denyAccessUnlessGranted('edit', $task);
         // build the form ...
@@ -65,24 +65,21 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(ToggleTaskHandler $handler, Task $task)
+    public function toggleTaskAction(ToggleTask $toggle, Task $task)
     {
-        $handler->handle($task);
-        // Different feedback message according to task
-        $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.'; 
-        $this->addFlash('success', sprintf($feedback, $task->getTitle()));
-
+        $toggle->switch($task);
+        
         return $this->redirectToRoute('task_list');
     }
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(DeleteTaskHandler $handler, Task $task)
+    public function deleteTaskAction(DeleteManager $manager, Task $task)
     {
         $this->denyAccessUnlessGranted('delete', $task);
 
-        $handler->handle($task);
+        $manager->delete($task);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
         

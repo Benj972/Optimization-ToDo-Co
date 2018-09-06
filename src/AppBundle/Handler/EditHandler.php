@@ -4,7 +4,7 @@ namespace AppBundle\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class EditUserHandler
+class EditHandler
 {
     /**
      * @var EntityManagerInterface
@@ -12,7 +12,7 @@ class EditUserHandler
     private $manager;
 
     /**
-     * EditUserHandler constructor.
+     * EditTaskHandler constructor.
      * @param EntityManagerInterface $manager
      */
     public function __construct(EntityManagerInterface $manager)
@@ -27,7 +27,7 @@ class EditUserHandler
     {
         if ($form->isSubmitted() && $form->isValid()) {
             $this->manager->flush();
-
+            
             return true;
         }
 

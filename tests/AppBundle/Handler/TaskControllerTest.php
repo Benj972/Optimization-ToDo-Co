@@ -18,7 +18,7 @@ class TaskControllerTest extends TestCase
             ->getMock();
 
         $createTasks = $this
-            ->getMockBuilder('AppBundle\Handler\CreateTaskHandler')
+            ->getMockBuilder('AppBundle\Handler\CreateHandler')
             ->disableOriginalConstructor()
             ->setMethods(['handle'])
             ->getMock();
@@ -38,7 +38,7 @@ class TaskControllerTest extends TestCase
             ->getMock();
 
         $editTasks = $this
-            ->getMockBuilder('AppBundle\Handler\EditTaskHandler')
+            ->getMockBuilder('AppBundle\Handler\EditHandler')
             ->disableOriginalConstructor()
             ->setMethods(['handle'])
             ->getMock();
@@ -53,30 +53,30 @@ class TaskControllerTest extends TestCase
     public function testDeleteAction()
     {
         $deleteTasks = $this
-            ->getMockBuilder('AppBundle\Handler\DeleteTaskHandler')
+            ->getMockBuilder('AppBundle\Service\DeleteManager')
             ->disableOriginalConstructor()
-            ->setMethods(['handle'])
+            ->setMethods(['delete'])
             ->getMock();
         $deleteTasks
             ->expects($this->once())
-            ->method('handle')
+            ->method('delete')
             ->willReturn(NULL);
 
-        $this->assertNull($deleteTasks->handle(new Task()));
+        $this->assertNull($deleteTasks->delete(new Task()));
     }
 
     public function testToggleTaskAction()
     {
         $toggleTasks = $this
-            ->getMockBuilder('AppBundle\Handler\ToggleTaskHandler')
+            ->getMockBuilder('AppBundle\Service\ToggleTask')
             ->disableOriginalConstructor()
-            ->setMethods(['handle'])
+            ->setMethods(['switch'])
             ->getMock();
         $toggleTasks
             ->expects($this->once())
-            ->method('handle')
+            ->method('switch')
             ->willReturn(NULL);
 
-        $this->assertNull($toggleTasks->handle(new Task()));
+        $this->assertNull($toggleTasks->switch(new Task()));
     }
 }

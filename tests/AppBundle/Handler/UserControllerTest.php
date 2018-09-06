@@ -17,7 +17,7 @@ class UserControllerTest extends TestCase
             ->getMock();
 
         $createUsers = $this
-            ->getMockBuilder('AppBundle\Handler\CreateUserHandler')
+            ->getMockBuilder('AppBundle\Handler\CreateHandler')
             ->disableOriginalConstructor()
             ->setMethods(['handle'])
             ->getMock();
@@ -37,7 +37,7 @@ class UserControllerTest extends TestCase
             ->getMock();
 
         $editUsers = $this
-            ->getMockBuilder('AppBundle\Handler\EditUserHandler')
+            ->getMockBuilder('AppBundle\Handler\EditHandler')
             ->disableOriginalConstructor()
             ->setMethods(['handle'])
             ->getMock();
@@ -52,15 +52,15 @@ class UserControllerTest extends TestCase
 	public function testDeleteAction()
 	{
 		$deleteUsers = $this
-            ->getMockBuilder('AppBundle\Handler\DeleteUserHandler')
+            ->getMockBuilder('AppBundle\Service\DeleteManager')
             ->disableOriginalConstructor()
-            ->setMethods(['handle'])
+            ->setMethods(['delete'])
             ->getMock();
         $deleteUsers
             ->expects($this->once())
-            ->method('handle')
+            ->method('delete')
             ->willReturn(NULL);
 
-        $this->assertNull($deleteUsers->handle(new User()));
+        $this->assertNull($deleteUsers->delete(new User()));
 	}
 }

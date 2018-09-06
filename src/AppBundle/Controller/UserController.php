@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Handler\CreateUserHandler;
-use AppBundle\Handler\EditUserHandler;
-use AppBundle\Handler\DeleteUserHandler;
+use AppBundle\Handler\CreateHandler;
+use AppBundle\Handler\EditHandler;
+use AppBundle\Service\DeleteManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -29,7 +29,7 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(CreateUserHandler $handler, Request $request)
+    public function createAction(CreateHandler $handler, Request $request)
     {
         $user = new User();
 
@@ -49,7 +49,7 @@ class UserController extends Controller
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(EditUserHandler $handler, User $user, Request $request)
+    public function editAction(EditHandler $handler, User $user, Request $request)
     {
         $form =$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -68,17 +68,17 @@ class UserController extends Controller
     /**
      * @Route("/users/{id}/delete", name="user_delete")
      */
-    public function deleteAction(DeleteUserHandler $handler, User $user, TokenStorageInterface $tokenStorage)
+    public function deleteAction(DeleteManager $manager, User $user, TokenStorageInterface $tokenStorage)
     {
         if ($user === $this->getUser()) {
-            $handler->handle($user);
+            $manager->delete($user);
             // UserProvider to null
             $tokenStorage->setToken(null);
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
             return $this->redirectToRoute('login');
 
         } elseif ($user !==  $this->getUser()) {
-            $handler->handle($user);
+            $manager->delete($user);
 
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
             return $this->redirectToRoute('user_list');
