@@ -24,6 +24,7 @@ class CreateHandler
     /**
      * @param Task $task
      * @param FormInterface $form
+     * @return bool 
      */
     public function handle(FormInterface $form, $entity): bool
     {

@@ -5,6 +5,9 @@ namespace AppBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
+/**
+ * This class allows to manage the task as realized or not.
+ */
 class ToggleTask
 { 
     /**
@@ -18,8 +21,9 @@ class ToggleTask
     private $flashBag;
 
     /**
-     * ToggleTaskHandler constructor.
+     * ToggleTask constructor.
      * @param EntityManagerInterface $manager
+     * @param FlashBagInterface $flashbag
      */
     public function __construct(EntityManagerInterface $manager, FlashBagInterface $flashBag)
     {

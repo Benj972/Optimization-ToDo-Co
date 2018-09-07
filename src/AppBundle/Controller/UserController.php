@@ -32,15 +32,16 @@ class UserController extends Controller
     public function createAction(CreateHandler $handler, Request $request)
     {
         $user = new User();
-
+        // build the form 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        //call FormHandler
         if($handler->handle($form, $user)) {
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
             return $this->redirectToRoute('user_list');
         }
-
+        // render the template
         return $this->render('user/create.html.twig',[
             'form'  => $form->createView(),
         ]);
@@ -51,14 +52,17 @@ class UserController extends Controller
      */
     public function editAction(EditHandler $handler, User $user, Request $request)
     {
+        // build the form
         $form =$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        //call FormHandler
         if($handler->handle($form)) {
             $this->addFlash('success', "L'utilisateur a bien été modifié");
             return $this->redirectToRoute('user_list');
         }
 
+        // render the template
         return $this->render('user/edit.html.twig',[
             'form'  => $form->createView(),
             'user' => $user,
@@ -71,6 +75,7 @@ class UserController extends Controller
     public function deleteAction(DeleteManager $manager, User $user, TokenStorageInterface $tokenStorage)
     {
         if ($user === $this->getUser()) {
+            //call service DeleteManager
             $manager->delete($user);
             // UserProvider to null
             $tokenStorage->setToken(null);

@@ -4,6 +4,9 @@ namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+/*
+ *  This class is called to delete an entity.
+ */
 class DeleteManager
 {
     /**
@@ -12,7 +15,7 @@ class DeleteManager
     private $manager;
 
     /**
-     * DeleteTaskHandler constructor.
+     * DeleteManager constructor.
      * @param EntityManagerInterface $manager
      */
     public function __construct(EntityManagerInterface $manager)
@@ -21,7 +24,7 @@ class DeleteManager
     }
 
     /**
-     * @param Task $task
+     * @param Entity $entity
      */
     public function delete($entity)
     {

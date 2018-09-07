@@ -29,10 +29,11 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->setUser($this->getUser());
-        // build the form ...
+        // build the form 
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         
+        //call FormHandler
         if ($handler->handle($form, $task)) {
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
             return $this->redirectToRoute('task_list');
@@ -46,11 +47,13 @@ class TaskController extends Controller
      */
     public function editAction(EditHandler $handler, Task $task, Request $request)
     {
+        //check for "edit" access
         $this->denyAccessUnlessGranted('edit', $task);
-        // build the form ...
+        // build the form
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
+        //call FormHandler
         if ($handler->handle($form)) {
             $this->addFlash('success', 'La tâche a bien été modifiée.');
             return $this->redirectToRoute('task_list');
@@ -67,6 +70,7 @@ class TaskController extends Controller
      */
     public function toggleTaskAction(ToggleTask $toggle, Task $task)
     {
+        //call service ToggleTask
         $toggle->switch($task);
         
         return $this->redirectToRoute('task_list');
@@ -77,8 +81,9 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(DeleteManager $manager, Task $task)
     {
+        //check for "delete" access
         $this->denyAccessUnlessGranted('delete', $task);
-
+        //call service DeleteManager
         $manager->delete($task);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
