@@ -8,9 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Handler\CreateUserHandler;
-use AppBundle\Handler\EditUserHandler;
-use AppBundle\Handler\DeleteUserHandler;
+use AppBundle\Handler\CreateHandler;
+use AppBundle\Handler\EditHandler;
+use AppBundle\Service\DeleteManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Security("has_role('ROLE_ADMIN')")
@@ -28,24 +29,63 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(CreateUserHandler $handler)
+    public function createAction(CreateHandler $handler, Request $request)
     {
-        return $handler->handle();
+        $user = new User();
+        // build the form
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        //call FormHandler
+        if ($handler->handle($form, $user)) {
+            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            return $this->redirectToRoute('user_list');
+        }
+        // render the template
+        return $this->render('user/create.html.twig', [
+            'form'  => $form->createView(),
+        ]);
     }
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(EditUserHandler $handler, User $user)
+    public function editAction(EditHandler $handler, User $user, Request $request)
     {
-        return $handler->handle($user);
+        // build the form
+        $form =$this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        //call FormHandler
+        if ($handler->handle($form)) {
+            $this->addFlash('success', "L'utilisateur a bien été modifié");
+            return $this->redirectToRoute('user_list');
+        }
+
+        // render the template
+        return $this->render('user/edit.html.twig', [
+            'form'  => $form->createView(),
+            'user' => $user,
+        ]);
     }
 
     /**
      * @Route("/users/{id}/delete", name="user_delete")
      */
-    public function deleteAction(DeleteUserHandler $handler, User $user)
+    public function deleteAction(DeleteManager $manager, User $user, TokenStorageInterface $tokenStorage)
     {
-        return $handler->handle($user, $this->getUser());
+        if ($user === $this->getUser()) {
+            //call service DeleteManager
+            $manager->delete($user);
+            // UserProvider to null
+            $tokenStorage->setToken(null);
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+            return $this->redirectToRoute('login');
+        } elseif ($user !==  $this->getUser()) {
+            $manager->delete($user);
+
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+            return $this->redirectToRoute('user_list');
+        }
     }
 }

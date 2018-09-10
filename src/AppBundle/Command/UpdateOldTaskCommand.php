@@ -10,12 +10,26 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Task;
 
+/*
+ * This class is used to link old tasks to the anonymous user
+ */
 class UpdateOldTaskCommand extends ContainerAwareCommand
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private $manager;
 
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $encoder;
 
+    /**
+     * UpdateOldTaskCommand constructor.
+     * @param EntityManagerInterface $manager
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         parent::__construct();
@@ -25,6 +39,7 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
 
     protected function configure()
     {
+        //create command
         $this
             ->setName('demo:load')
             ->setDescription('Updates old tasks without user')
@@ -37,6 +52,7 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
         $usercommand = $input->getArgument('anonymous');
         $text = strtoupper('Bad Command');
         if (true == $usercommand) {
+            //create anonymous and link to old tasks
             $anonymous = $this->load();
             $this->setOldTask($anonymous);
             $text = strtoupper('Old Tasks Update');
@@ -46,6 +62,7 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
 
     public function load()
     {
+        //create user anonymous
         $anonymous = new User();
         $anonymous->setUsername('anonymous');
         $anonymous->setPassword('passwordanonymous');
@@ -58,9 +75,11 @@ class UpdateOldTaskCommand extends ContainerAwareCommand
 
     public function setOldTask($anonymous)
     {
+        //search tasks
         $tasks = $this->manager->getRepository('AppBundle:Task')->findAll();
         foreach ($tasks as $task) {
             if (null === $task->getUser()) {
+                //link tasks without user to anonymous
                 $task->setUser($anonymous);
                 $this->manager->persist($task);
                 $this->manager->flush();

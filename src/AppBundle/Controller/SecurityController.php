@@ -17,20 +17,4 @@ class SecurityController extends Controller
             'error'         => $this->get('security.authentication_utils')->getLastAuthenticationError(),
         ));
     }
-
-    /**
-     * @Route("/login_check", name="login_check")
-     */
-    public function loginCheck()
-    {
-        // This code is never executed.
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logoutCheck()
-    {
-        // This code is never executed.
-    }
 }

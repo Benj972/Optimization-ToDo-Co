@@ -7,6 +7,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Task;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/*
+ *  This class is responsible for loading tasks
+ */
 class LoadTask extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
@@ -49,6 +52,9 @@ class LoadTask extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    /*
+     * Load user class first
+     */
     public function getDependencies()
     {
         return [

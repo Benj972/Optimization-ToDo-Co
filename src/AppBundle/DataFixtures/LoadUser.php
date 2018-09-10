@@ -8,6 +8,9 @@ use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/*
+ *  This class is responsible for loading users
+ */
 class LoadUser extends Fixture
 {
     public function load(ObjectManager $manager)
