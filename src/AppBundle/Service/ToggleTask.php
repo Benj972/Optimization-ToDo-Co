@@ -1,16 +1,15 @@
 <?php
 
-namespace AppBundle\Handler;
+namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use AppBundle\Entity\Task;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Routing\RouterInterface;
 
-class ToggleTaskHandler
+/**
+ * This class allows to manage the task as realized or not.
+ */
+class ToggleTask
 {
-  
     /**
      * @var EntityManagerInterface
      */
@@ -20,42 +19,28 @@ class ToggleTaskHandler
      * @var FlashBagInterface
      */
     private $flashBag;
-    
-    /**
-     * @var RouterInterface
-     */
-    private $router;
 
     /**
-     * ToggleTaskHandler constructor.
+     * ToggleTask constructor.
      * @param EntityManagerInterface $manager
-     * @param FlashBagInterface $flashBag
-     * @param RouterInterface $router
+     * @param FlashBagInterface $flashbag
      */
-    public function __construct(EntityManagerInterface $manager, FlashBagInterface $flashBag, RouterInterface $router)
+    public function __construct(EntityManagerInterface $manager, FlashBagInterface $flashBag)
     {
         $this->manager = $manager;
         $this->flashBag = $flashBag;
-        $this->router = $router;
     }
 
     /**
      * @param Task $task
-     * @return RedirectResponse|Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
-    public function handle(Task $task)
+    public function switch($task)
     {
         $task->toggle(!$task->isDone());
         $this->manager->flush();
+
         // Different feedback message according to task
         $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.';
         $this->flashBag->add('success', sprintf($feedback, $task->getTitle()));
-
-        return new RedirectResponse(
-            $this->router->generate('task_list')
-        );
     }
 }

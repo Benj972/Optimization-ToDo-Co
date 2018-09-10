@@ -10,11 +10,25 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 
 class TaskVoter extends Voter
 {
+    /**
+     * @var string Should contain a description
+     */
     const EDIT = 'edit';
+
+    /**
+     * @var string Should contain a description
+     */
     const DELETE = 'delete';
 
+    /**
+     * @var AccessDecisionManagerInterface
+     */
     private $decisionManager;
 
+    /**
+     * TaskVoter constructor.
+     * @param AccessDecisionManagerInterface $decisionManager
+     */
     public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
@@ -55,6 +69,13 @@ class TaskVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
+    /*
+     * The user can edit a task he has created
+     * @param Task $task
+     * @param User $user
+     *
+     * @return bool|null true or null if he is not the good user
+     */
     private function canEdit(Task $task, User $user)
     {
         if ($task->getUser()===$user) {
@@ -62,6 +83,12 @@ class TaskVoter extends Voter
         }
     }
 
+    /*
+     * The user can delete a task he has created
+     * @param Task $task
+     * @param User $user
+     * @param TokenInterface $token
+     */
     private function canDelete(Task $task, User $user, TokenInterface $token)
     {
         return $this->canEdit($task, $user) || ($this->decisionManager->decide($token, array('ROLE_ADMIN')) && $task->isAnonymous());
