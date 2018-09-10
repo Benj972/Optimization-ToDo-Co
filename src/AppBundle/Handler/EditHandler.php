@@ -22,7 +22,7 @@ class EditHandler
 
     /**
      * @param FormInterface $form
-     * @return bool 
+     * @return bool
      */
     public function handle($form)
     {

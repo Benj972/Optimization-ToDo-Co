@@ -32,17 +32,17 @@ class UserController extends Controller
     public function createAction(CreateHandler $handler, Request $request)
     {
         $user = new User();
-        // build the form 
+        // build the form
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         //call FormHandler
-        if($handler->handle($form, $user)) {
+        if ($handler->handle($form, $user)) {
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
             return $this->redirectToRoute('user_list');
         }
         // render the template
-        return $this->render('user/create.html.twig',[
+        return $this->render('user/create.html.twig', [
             'form'  => $form->createView(),
         ]);
     }
@@ -57,13 +57,13 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         //call FormHandler
-        if($handler->handle($form)) {
+        if ($handler->handle($form)) {
             $this->addFlash('success', "L'utilisateur a bien été modifié");
             return $this->redirectToRoute('user_list');
         }
 
         // render the template
-        return $this->render('user/edit.html.twig',[
+        return $this->render('user/edit.html.twig', [
             'form'  => $form->createView(),
             'user' => $user,
         ]);
@@ -81,7 +81,6 @@ class UserController extends Controller
             $tokenStorage->setToken(null);
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
             return $this->redirectToRoute('login');
-
         } elseif ($user !==  $this->getUser()) {
             $manager->delete($user);
 

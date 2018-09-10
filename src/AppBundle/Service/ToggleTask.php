@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  * This class allows to manage the task as realized or not.
  */
 class ToggleTask
-{ 
+{
     /**
      * @var EntityManagerInterface
      */
@@ -40,7 +40,7 @@ class ToggleTask
         $this->manager->flush();
 
         // Different feedback message according to task
-        $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.'; 
+        $feedback = $task->isDone() ? 'La tâche "%s" a bien été marquée comme terminée.' : 'La tâche "%s" a bien été marquée en cours.';
         $this->flashBag->add('success', sprintf($feedback, $task->getTitle()));
     }
 }

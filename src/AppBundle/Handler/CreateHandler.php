@@ -24,11 +24,10 @@ class CreateHandler
     /**
      * @param Task $task
      * @param FormInterface $form
-     * @return bool 
+     * @return bool
      */
     public function handle(FormInterface $form, $entity): bool
     {
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->manager->persist($entity);
             $this->manager->flush();
