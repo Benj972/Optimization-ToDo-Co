@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Security\TaskVoterTest;
+namespace tests\AppBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use AppBundle\Security\TaskVoter;
