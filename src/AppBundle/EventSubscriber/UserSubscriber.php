@@ -7,6 +7,9 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppBundle\Entity\User;
 
+/*
+ * This class is used to manage password hashing
+ */
 class UserSubscriber implements EventSubscriber
 {
     /**
@@ -14,6 +17,10 @@ class UserSubscriber implements EventSubscriber
      */
     private $encoder;
 
+    /**
+     * UserSubscriber constructor.
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;

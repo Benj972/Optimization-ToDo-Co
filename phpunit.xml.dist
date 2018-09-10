@@ -10,6 +10,7 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="/disabled/" />
     </php>
 
     <testsuites>
@@ -17,8 +18,14 @@
             <file>tests/AppBundle/Controller/DefaultControllerTest.php</file>
             <file>tests/AppBundle/Controller/SecurityControllerTest.php</file>
             <file>tests/AppBundle/Controller/TaskControllerTest.php</file>
-            <file>tests/AppBundle/Controller/UserControllerTest.php</file>       
+            <file>tests/AppBundle/Controller/UserControllerTest.php</file>      
             <file>tests/AppBundle/Command/UpdateOldTaskCommandTest.php</file>
+            <file>tests/AppBundle/Handler/TaskControllerTest.php</file>
+            <file>tests/AppBundle/Handler/UserControllerTest.php</file>
+            <file>tests/AppBundle/Service/TaskControllerTest.php</file>
+            <file>tests/AppBundle/Service/UserControllerTest.php</file>
+            <file>tests/AppBundle/Security/TaskVoterTest.php</file>
+            <file>tests/AppBundle/Form/TaskTypeTest.php</file>
         </testsuite>
     </testsuites>
 
