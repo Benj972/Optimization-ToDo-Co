@@ -5,7 +5,6 @@ namespace tests\AppBundle\Handler;
 use PHPUnit\Framework\TestCase;
 use AppBundle\Controller\TaskController;
 use AppBundle\Entity\Task;
-use AppBundle\Entity\User;
 use Symfony\Component\Form\FormInterface;
 
 class TaskControllerTest extends TestCase
@@ -48,35 +47,5 @@ class TaskControllerTest extends TestCase
             ->willReturn(true);
        
         $this->assertInternalType('bool', $editTasks->handle($form)); 
-    }
-
-    public function testDeleteAction()
-    {
-        $deleteTasks = $this
-            ->getMockBuilder('AppBundle\Service\DeleteManager')
-            ->disableOriginalConstructor()
-            ->setMethods(['delete'])
-            ->getMock();
-        $deleteTasks
-            ->expects($this->once())
-            ->method('delete')
-            ->willReturn(NULL);
-
-        $this->assertNull($deleteTasks->delete(new Task()));
-    }
-
-    public function testToggleTaskAction()
-    {
-        $toggleTasks = $this
-            ->getMockBuilder('AppBundle\Service\ToggleTask')
-            ->disableOriginalConstructor()
-            ->setMethods(['switch'])
-            ->getMock();
-        $toggleTasks
-            ->expects($this->once())
-            ->method('switch')
-            ->willReturn(NULL);
-
-        $this->assertNull($toggleTasks->switch(new Task()));
     }
 }

@@ -48,19 +48,4 @@ class UserControllerTest extends TestCase
        
         $this->assertInternalType('bool', $editUsers->handle($form));
 	}
-
-	public function testDeleteAction()
-	{
-		$deleteUsers = $this
-            ->getMockBuilder('AppBundle\Service\DeleteManager')
-            ->disableOriginalConstructor()
-            ->setMethods(['delete'])
-            ->getMock();
-        $deleteUsers
-            ->expects($this->once())
-            ->method('delete')
-            ->willReturn(NULL);
-
-        $this->assertNull($deleteUsers->delete(new User()));
-	}
 }
